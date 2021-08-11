@@ -73,6 +73,7 @@ module.exports = {
     'no-shadow': 'off',
     '@typescript-eslint/no-shadow': ['warn'],
     'react/jsx-wrap-multilines': 'off',
+    'no-bitwise': 'off',
   },
   settings: {
     'import/resolver': {
