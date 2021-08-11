@@ -18,7 +18,7 @@ export const Sidebar: React.FC<React.HTMLAttributes<any>> = ({
     [
       'App',
       [
-        { label: 'Dashboard', icon: 'fa-chart-pie', href: '/' },
+        { label: 'Dashboard', icon: 'fa-chart-pie', href: '/dashboard' },
         { label: 'Exames', icon: 'fa-user-check', href: '/exams' },
         {
           label: 'Labaratórios',

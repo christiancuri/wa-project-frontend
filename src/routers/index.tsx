@@ -1,3 +1,6 @@
+import React from 'react';
+import { Redirect } from 'react-router';
+
 import { PrivateLayout } from '../layout/Private';
 import { DashboardPage } from '../pages/Dashboard';
 import { ExamsPage } from '../pages/Exam';
@@ -11,6 +14,11 @@ export const publicRoutes: RouteConfig[] = [
     routes: [
       {
         path: '',
+        exact: true,
+        component: () => <Redirect to="/dashboard" />,
+      },
+      {
+        path: 'dashboard',
         exact: true,
         component: DashboardPage,
       },
