@@ -6,7 +6,7 @@ import { RouteConfig } from './Route';
 
 export const publicRoutes: RouteConfig[] = [
   {
-    path: '/',
+    path: '',
     component: PrivateLayout,
     routes: [
       {
@@ -15,7 +15,7 @@ export const publicRoutes: RouteConfig[] = [
         component: DashboardPage,
       },
       {
-        path: 'exam',
+        path: 'exams',
         exact: true,
         component: ExamsPage,
       },

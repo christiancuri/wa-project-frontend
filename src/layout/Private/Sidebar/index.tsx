@@ -18,8 +18,8 @@ export const Sidebar: React.FC<React.HTMLAttributes<any>> = ({
     [
       'App',
       [
-        { label: 'Dashboard', icon: 'fa-chart-pie', href: '/dashboard' },
-        { label: 'Exames', icon: 'fa-user-check', href: '/exam' },
+        { label: 'Dashboard', icon: 'fa-chart-pie', href: '/' },
+        { label: 'Exames', icon: 'fa-user-check', href: '/exams' },
         {
           label: 'Labaratórios',
           icon: 'fa-user-lock',
