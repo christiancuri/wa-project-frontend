@@ -1,0 +1,38 @@
+@tailwind base;
+
+@import url('https://fonts.googleapis.com/css?family=Ubuntu&display=swap');
+
+/* Your own custom base styles */
+@layer base {
+  *,
+  *:focus {
+    outline: none !important;
+    box-shadow: none;
+  }
+}
+
+/* Start purging... */
+@tailwind components;
+/* Stop purging. */
+
+/* Your own custom component styles */
+@import 'surfaces';
+@import 'typography';
+@import 'border';
+@import 'nav-link';
+@import 'overlay';
+@import 'card';
+@import 'buttons';
+@import "field-control";
+
+/* Start purging... */
+@tailwind utilities;
+/* Stop purging. */
+
+@layer utilities {
+  .bg-inherit {
+    background-color: inherit;
+  }
+}
+
+/* Your own custom utilities */

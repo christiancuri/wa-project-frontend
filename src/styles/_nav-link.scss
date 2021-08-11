@@ -1,0 +1,17 @@
+@layer components {
+  .nav-link {
+    @apply px-4 py-2 block capitalize rounded;
+    @apply font-medium text-sm tracking-wide;
+    @apply transition-all duration-300 ease-out;
+    @apply hover:bg-gray-100 dark:hover:bg-white hover:bg-black hover:bg-opacity-10 hover:text-gray-100;
+
+    i {
+      @apply mr-2 text-sm;
+    }
+
+    &.active {
+      @apply bg-blue-500;
+      color: #d2d2d2;
+    }
+  }
+}

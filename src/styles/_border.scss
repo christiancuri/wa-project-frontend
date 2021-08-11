@@ -1,0 +1,9 @@
+@layer base {
+  .border-1 {
+    @apply border-white border-opacity-10;
+  }
+
+  .border-2 {
+    @apply border-white border-opacity-20;
+  }
+}

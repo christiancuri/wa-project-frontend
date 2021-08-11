@@ -1,0 +1,41 @@
+.sidebar {
+  @apply invisible fixed top-0 left-0 h-screen w-screen bg-transparent;
+  @apply transition-all duration-300;
+  @apply lg:relative lg:h-full lg:w-full;
+
+  &.open {
+    @apply visible;
+    @apply bg-black bg-opacity-70;
+
+    .content {
+      @apply translate-x-0;
+    }
+
+    .mobileToggle {
+      @apply scale-100;
+    }
+  }
+
+  @screen lg {
+    @apply visible;
+  }
+}
+
+.content {
+  @apply h-full w-4/5 flex flex-col flex-wrap border-r p-2;
+  @apply md:w-2/5;
+  @apply transition-transform duration-500;
+  @apply transform -translate-x-full;
+  @apply lg:w-full;
+
+  @screen lg {
+    @apply transform-none;
+  }
+}
+
+.mobileToggle {
+  @apply fixed top-6 -right-10 text-2xl text-gray-700;
+  @apply transition-transform duration-300 origin-center;
+  @apply transform scale-0;
+  @apply lg:hidden;
+}

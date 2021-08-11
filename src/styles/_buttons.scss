@@ -1,0 +1,56 @@
+@layer components {
+  .btn {
+    @apply focus:outline-none text-white text-sm py-2.5 px-5 rounded-md;
+    @apply transition-colors duration-200;
+
+    &.primary {
+      @apply bg-blue-500 hover:bg-blue-600 hover:shadow-lg;
+      
+      &.outline {
+        @apply border bg-transparent border-blue-500 text-blue-500 hover:text-white;
+      }
+    }
+    &.secondary {
+      @apply bg-gray-500 hover:bg-gray-600 hover:shadow-lg;
+      
+      &.outline {
+        @apply border bg-transparent border-gray-500 text-gray-500 hover:text-white;
+      }
+    }
+    &.success {
+      @apply bg-green-500 hover:bg-green-600 hover:shadow-lg;
+      
+      &.outline {
+        @apply border bg-transparent border-green-500 text-green-500 hover:text-white;
+      }
+    }
+    &.danger {
+      @apply bg-red-500 hover:bg-red-600 hover:shadow-lg;
+      
+      &.outline {
+        @apply border bg-transparent border-red-500 text-red-500 hover:text-white;
+      }
+    }
+    &.warning {
+      @apply bg-yellow-500 hover:bg-yellow-600 hover:shadow-lg;
+      
+      &.outline {
+        @apply border bg-transparent border-yellow-500 text-yellow-500 hover:text-white;
+      }
+    }
+    &.info {
+      @apply bg-purple-500 hover:bg-purple-600 hover:shadow-lg;
+      
+      &.outline {
+        @apply border bg-transparent border-purple-500 text-purple-500 hover:text-white;
+      }
+    }
+    &.dark {
+      @apply bg-gray-700 hover:bg-gray-900 hover:shadow-lg;
+      
+      &.outline {
+        @apply border bg-transparent border-gray-700 text-gray-700 hover:text-white;
+      }
+    }
+  }
+}

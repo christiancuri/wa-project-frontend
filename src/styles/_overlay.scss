@@ -1,0 +1,11 @@
+@layer components {
+  .overlay {
+    position: relative;
+
+    &.open &-content {
+      position: absolute;
+      right: 0;
+      top: 100%;
+    }
+  }
+}

@@ -1,0 +1,13 @@
+@layer components {
+  .surface-1 {
+    @apply bg-gray-50 dark:bg-gray-900;
+  }
+
+  .surface-2 {
+    @apply bg-white dark:bg-gray-600;
+  }
+
+  .surface-3 {
+    @apply bg-gray-100 dark:bg-gray-800;
+  }
+}

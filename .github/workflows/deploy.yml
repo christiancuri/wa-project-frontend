@@ -1,0 +1,63 @@
+name: Simple Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [14.x]
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        if: "contains(github.event.commits.*.message, 'ci: skip') != true"
+        uses: actions/checkout@v2
+
+      - name: Setup SSH
+        if: "contains(github.event.commits.*.message, 'ci: skip') != true"
+        uses: webfactory/ssh-agent@v0.4.1
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Setup ssh hosts
+        if: "contains(github.event.commits.*.message, 'ci: skip') != true"
+        run: ssh-keyscan -t rsa ${{ secrets.HOST_PRODUCTION }} >> ~/.ssh/known_hosts
+
+      - name: Setup Node.js ${{ matrix.node-version }}
+        if: "contains(github.event.commits.*.message, 'ci: skip') != true"
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Deleting github folder
+        if: "contains(github.event.commits.*.message, 'ci: skip') != true"
+        run: rm -rf .git
+
+      - name: Install dependencies
+        if: "contains(github.event.commits.*.message, 'ci: skip') != true"
+        run: yarn install
+
+      - name: Build
+        if: "contains(github.event.commits.*.message, 'ci: skip') != true"
+        run: export CI=false && yarn build
+
+      - name: Compress Project
+        if: "contains(github.event.commits.*.message, 'ci: skip') != true"
+        run: zip -r archive.zip build
+
+      - name: Sync Project
+        if: "contains(github.event.commits.*.message, 'ci: skip') != true"
+        run: rsync -a --rsync-path="sudo rsync" archive.zip anubis@${{ secrets.HOST_PRODUCTION }}:/app/closefriends/${{ github.event.repository.name }}/archive.zip
+
+      - name: Remote Deploy
+        if: "contains(github.event.commits.*.message, 'ci: skip') != true"
+        run: |
+          ssh -tt anubis@${{ secrets.HOST_PRODUCTION }} 'sudo -i -u root bash -c "
+            cd /app/closefriends/${{ github.event.repository.name }};
+            unzip -u -o -q archive.zip;
+          "'
