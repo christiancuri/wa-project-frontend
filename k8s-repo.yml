@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: wa-project-frontend
+  name: wa-project-frontend
+  namespace: default
+spec:
+  minReadySeconds: 5
+  progressDeadlineSeconds: 30
+  replicas: 1
+  revisionHistoryLimit: 5
+  selector:
+    matchLabels:
+      app: wa-project-frontend
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: wa-project-frontend
+    spec:
+      containers:
+        - env:
+            - name: ENVIRONMENT
+              value: PRODUCTION
+          image: christiancury/wa-project-frontend:latest
+          name: wa-project-frontend
+          ports:
+            - containerPort: 8080
+      terminationGracePeriodSeconds: 10
+      imagePullSecrets:
+        - name: dockerhub

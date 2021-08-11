@@ -1,4 +1,4 @@
-name: Simple Deploy
+name: Deploy
 
 on:
   push:
@@ -9,9 +9,6 @@ jobs:
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [14.x]
     timeout-minutes: 5
     steps:
       - name: Checkout
@@ -28,36 +25,34 @@ jobs:
         if: "contains(github.event.commits.*.message, 'ci: skip') != true"
         run: ssh-keyscan -t rsa ${{ secrets.HOST_PRODUCTION }} >> ~/.ssh/known_hosts
 
-      - name: Setup Node.js ${{ matrix.node-version }}
+      - name: Set up QEMU
         if: "contains(github.event.commits.*.message, 'ci: skip') != true"
-        uses: actions/setup-node@v1
+        uses: docker/setup-qemu-action@v1
+
+      - name: Set up Docker Buildx
+        if: "contains(github.event.commits.*.message, 'ci: skip') != true"
+        uses: docker/setup-buildx-action@v1
+
+      - name: Login to DockerHub
+        if: "contains(github.event.commits.*.message, 'ci: skip') != true"
+        uses: docker/login-action@v1
         with:
-          node-version: ${{ matrix.node-version }}
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Deleting github folder
+      - name: Build and push
         if: "contains(github.event.commits.*.message, 'ci: skip') != true"
-        run: rm -rf .git
-
-      - name: Install dependencies
-        if: "contains(github.event.commits.*.message, 'ci: skip') != true"
-        run: yarn install
-
-      - name: Build
-        if: "contains(github.event.commits.*.message, 'ci: skip') != true"
-        run: export CI=false && yarn build
-
-      - name: Compress Project
-        if: "contains(github.event.commits.*.message, 'ci: skip') != true"
-        run: zip -r archive.zip build
-
-      - name: Sync Project
-        if: "contains(github.event.commits.*.message, 'ci: skip') != true"
-        run: rsync -a --rsync-path="sudo rsync" archive.zip anubis@${{ secrets.HOST_PRODUCTION }}:/app/closefriends/${{ github.event.repository.name }}/archive.zip
-
-      - name: Remote Deploy
+        id: docker_build
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          file: ./Dockerfile
+          tags: |
+            ${{ secrets.DOCKER_USERNAME }}/${{ github.event.repository.name }}:latest
+            ${{ secrets.DOCKER_USERNAME }}/${{ github.event.repository.name }}:${{ github.sha }}
+      - name: Update Environment
         if: "contains(github.event.commits.*.message, 'ci: skip') != true"
         run: |
           ssh -tt anubis@${{ secrets.HOST_PRODUCTION }} 'sudo -i -u root bash -c "
-            cd /app/closefriends/${{ github.event.repository.name }};
-            unzip -u -o -q archive.zip;
+            kubectl set image deployment ${{ github.event.repository.name }} ${{ github.event.repository.name }}=${{ secrets.DOCKER_USERNAME }}/${{ github.event.repository.name }}:${{ github.sha }}
           "'
