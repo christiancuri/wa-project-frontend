@@ -77,7 +77,7 @@ export const DashboardPage: React.FC<any> = () => {
                   <KPI
                     title="Exames ativos"
                     body={`${exams.length} exames`}
-                    page="/exam"
+                    page="/exams"
                   />
                 </Col>
                 <Col sm="6">
