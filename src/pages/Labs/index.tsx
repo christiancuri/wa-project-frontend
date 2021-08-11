@@ -2,6 +2,7 @@ import React from 'react';
 import { Table, Card, Button, Form } from 'react-bootstrap';
 import { AiOutlineEdit, AiOutlineDelete, AiOutlineEye } from 'react-icons/all';
 import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router';
 import { toast } from 'react-toastify';
 
 import { Store } from '@store';
@@ -37,6 +38,8 @@ export const LabaratoriesPage: React.FC<any> = () => {
   const [selected, setSelected] = React.useState<
     (Laboratory & { checked?: boolean })[]
   >([]);
+
+  const history = useHistory();
 
   const fetchLaboratories = async () => {
     try {
@@ -118,6 +121,13 @@ export const LabaratoriesPage: React.FC<any> = () => {
                   Deletar selecionados
                 </Button>
               ) : null}
+              <Button
+                onClick={() => history.push('/labs/search')}
+                style={{ marginRight: '15px' }}
+                variant="warning"
+              >
+                Buscar por exame
+              </Button>
               <Button onClick={() => setShowCreateModal(true)}>+ Criar</Button>
             </div>
           </Card.Title>

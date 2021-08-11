@@ -5,6 +5,7 @@ import { PrivateLayout } from '../layout/Private';
 import { DashboardPage } from '../pages/Dashboard';
 import { ExamsPage } from '../pages/Exam';
 import { LabaratoriesPage } from '../pages/Labs';
+import { SearchLabaratoriesPage } from '../pages/Labs/Search';
 import { RouteConfig } from './Route';
 
 export const publicRoutes: RouteConfig[] = [
@@ -31,6 +32,11 @@ export const publicRoutes: RouteConfig[] = [
         path: 'labs',
         exact: true,
         component: LabaratoriesPage,
+      },
+      {
+        path: 'labs/search',
+        exact: true,
+        component: SearchLabaratoriesPage,
       },
     ],
   },
