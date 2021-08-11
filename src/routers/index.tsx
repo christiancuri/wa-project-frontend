@@ -6,11 +6,11 @@ import { RouteConfig } from './Route';
 
 export const publicRoutes: RouteConfig[] = [
   {
-    path: '',
+    path: '/',
     component: PrivateLayout,
     routes: [
       {
-        path: 'dashboard',
+        path: '',
         exact: true,
         component: DashboardPage,
       },
